@@ -1,3 +1,9 @@
+import {Switch, Route} from 'react-router-dom'
+
+import Home from './component/Home'
+import Register from './component/Register'
+import NotFound from './component/NotFound'
+
 import './App.css'
 
 // These are the lists used in the application. You can move them to any component needed.
@@ -25,6 +31,12 @@ const topicsList = [
 ]
 
 // Replace your code here
-const App = () => <h1>Hello World</h1>
+const App = () => (
+  <Switch>
+    <Route exact path="/" component={Home} />
+    <Route exact path="/register" component={Register} />
+    <Route component={NotFound} />
+  </Switch>
+)
 
 export default App
