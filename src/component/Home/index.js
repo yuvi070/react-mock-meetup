@@ -10,33 +10,49 @@ import {
   Image2,
 } from './styled'
 
+import myContext from '../../context'
+
 const Home = props => {
   const {history} = props
   const onClickRegister = () => {
-    history.replace('/register')
+    history.push('/register')
   }
   return (
-    <Main>
-      <HeaderDiv>
-        <Image
-          src="https://assets.ccbp.in/frontend/react-js/meetup/website-logo-img.png"
-          alt="website logo"
-        />
-      </HeaderDiv>
-      <BottomDiv>
-        <TextDiv>
-          <MainHeading>Welcome to Meetup</MainHeading>
-          <Para>Please register for the topic</Para>
-          <Button onClick={onClickRegister} type="button">
-            Register
-          </Button>
-        </TextDiv>
-        <Image2
-          src="https://assets.ccbp.in/frontend/react-js/meetup/meetup-img.png"
-          alt="meetup"
-        />
-      </BottomDiv>
-    </Main>
+    <myContext.Consumer>
+      {value => {
+        const {name, topic, registered} = value
+        console.log(registered, name)
+        return (
+          <Main>
+            <HeaderDiv>
+              <Image
+                src="https://assets.ccbp.in/frontend/react-js/meetup/website-logo-img.png"
+                alt="website logo"
+              />
+            </HeaderDiv>
+            <BottomDiv>
+              <TextDiv>
+                <MainHeading>
+                  {registered ? `Hello ${name}` : 'Welcome to Meetup'}
+                </MainHeading>
+                <Para>Please register for the topic</Para>
+                {registered ? (
+                  ''
+                ) : (
+                  <Button onClick={onClickRegister} type="button">
+                    Register
+                  </Button>
+                )}
+              </TextDiv>
+              <Image2
+                src="https://assets.ccbp.in/frontend/react-js/meetup/meetup-img.png"
+                alt="meetup"
+              />
+            </BottomDiv>
+          </Main>
+        )
+      }}
+    </myContext.Consumer>
   )
 }
 
