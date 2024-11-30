@@ -15,6 +15,7 @@ import {
   Input,
   Select,
   Button,
+  ErrorMsg,
 } from './styled'
 
 import myContext from '../../context'
@@ -47,6 +48,8 @@ class Register extends Component {
     name: '',
     topic: 'Arts and Culture',
     registered: false,
+    showError: false,
+    errorMsg: 'Please enter your name',
   }
 
   onChangeName = event => {
@@ -66,64 +69,75 @@ class Register extends Component {
   }
 
   render() {
-    const {name, registered, topic} = this.state
+    const {name, topic, showError, errorMsg} = this.state
     return (
-      <myContext.Provider
-        value={{
-          name,
-          topic,
-          registered,
-        }}
-      >
-        <Main>
-          <HeaderDiv>
-            <Image
-              src="https://assets.ccbp.in/frontend/react-js/meetup/website-logo-img.png"
-              alt="website logo"
-            />
-          </HeaderDiv>
-          <Wrapper>
-            <BottomDiv>
-              <Div1>
-                <Image1
-                  src="https://assets.ccbp.in/frontend/react-js/meetup/website-register-img.png"
-                  alt="website register"
+      <myContext.Consumer>
+        {value => {
+          const {setValues, registered} = value
+          const register = event => {
+            event.preventDefault()
+            if (name.length === 0) {
+              this.setState({showError: true})
+            } else {
+              const {history} = this.props
+              console.log('button clicked')
+              setValues(name, topic)
+              history.push('/')
+            }
+          }
+          return (
+            <Main>
+              <HeaderDiv>
+                <Image
+                  src="https://assets.ccbp.in/frontend/react-js/meetup/website-logo-img.png"
+                  alt="website logo"
                 />
-              </Div1>
-              <FormDiv as="form">
-                <MainHeading>Let us join</MainHeading>
-                <Div2>
-                  <Label htmlFor="name">Name</Label>
-                  <Input
-                    onChange={this.onChangeName}
-                    value={name}
-                    id="name"
-                    type="text"
-                    placeholder="Your name"
-                  />
-                </Div2>
-                <Div2>
-                  <Label htmlFor="topics">Topics</Label>
-                  <Select
-                    onChange={this.onChangeSelect}
-                    value={topic}
-                    id="topics"
-                  >
-                    {topicsList.map(each => (
-                      <option value={each.displayText} key={each.id}>
-                        {each.displayText}
-                      </option>
-                    ))}
-                  </Select>
-                </Div2>
-                <Button type="submit" onClick={this.onClickButton}>
-                  Register Now
-                </Button>
-              </FormDiv>
-            </BottomDiv>
-          </Wrapper>
-        </Main>
-      </myContext.Provider>
+              </HeaderDiv>
+              <Wrapper>
+                <BottomDiv>
+                  <Div1>
+                    <Image1
+                      src="https://assets.ccbp.in/frontend/react-js/meetup/website-register-img.png"
+                      alt="website register"
+                    />
+                  </Div1>
+                  <FormDiv as="form">
+                    <MainHeading>Let us join</MainHeading>
+                    <Div2>
+                      <Label htmlFor="name">Name</Label>
+                      <Input
+                        onChange={this.onChangeName}
+                        value={name}
+                        id="name"
+                        type="text"
+                        placeholder="Your name"
+                      />
+                    </Div2>
+                    <Div2>
+                      <Label htmlFor="topics">Topics</Label>
+                      <Select
+                        onChange={this.onChangeSelect}
+                        value={topic}
+                        id="topics"
+                      >
+                        {topicsList.map(each => (
+                          <option value={each.displayText} key={each.id}>
+                            {each.displayText}
+                          </option>
+                        ))}
+                      </Select>
+                    </Div2>
+                    <Button type="submit" onClick={register}>
+                      Register Now
+                    </Button>
+                    {showError && <ErrorMsg>{errorMsg}</ErrorMsg>}
+                  </FormDiv>
+                </BottomDiv>
+              </Wrapper>
+            </Main>
+          )
+        }}
+      </myContext.Consumer>
     )
   }
 }

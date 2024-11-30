@@ -21,7 +21,6 @@ const Home = props => {
     <myContext.Consumer>
       {value => {
         const {name, topic, registered} = value
-        console.log(registered, name)
         return (
           <Main>
             <HeaderDiv>
@@ -35,7 +34,12 @@ const Home = props => {
                 <MainHeading>
                   {registered ? `Hello ${name}` : 'Welcome to Meetup'}
                 </MainHeading>
-                <Para>Please register for the topic</Para>
+                <Para>
+                  {' '}
+                  {registered
+                    ? `Welcome to ${topic}`
+                    : 'Please register for the topic'}
+                </Para>
                 {registered ? (
                   ''
                 ) : (

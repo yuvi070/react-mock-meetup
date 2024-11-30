@@ -15,7 +15,6 @@ export const Image = styled.img`
 export const BottomDiv = styled.div`
   width: 65%;
   height: 80%;
-  background-color: grey;
   margin: auto;
   display: flex;
   justify-content: center;
@@ -44,7 +43,6 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-color: yellowgreen;
 `
 export const Div2 = styled.div`
   margin-bottom: 10px;
@@ -58,7 +56,7 @@ export const Input = styled.input`
   height: 35px;
   width: 100%;
   outline: none;
-  border: 0px;
+  border: 1px solid #64748b;
   border-radius: 2px;
 `
 export const Select = styled.select`
@@ -68,4 +66,18 @@ export const Select = styled.select`
   outline: none;
   border-radius: 2px;
 `
-export const Button = styled.button``
+export const Button = styled.button`
+  border: 0px;
+  width: 100px;
+  padding: 5px;
+  background-color: #3b82f6;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: 500;
+`
+
+export const ErrorMsg = styled.p`
+  color: red;
+  font-size: 12px;
+`
